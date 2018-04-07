@@ -17,6 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('question')->nullable();
+            $table->string('hint')->nullable();
             $table->text('answer')->nullable();
             $table->timestamp('lastanswered')->nullable();
             $table->timestamps();
