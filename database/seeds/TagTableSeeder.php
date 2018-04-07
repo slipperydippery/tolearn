@@ -1,0 +1,35 @@
+<?php
+
+use App\Tag;
+use Illuminate\Database\Seeder;
+
+class TagTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+    	$tag_php = new Tag();
+    	$tag_php->name = 'php';
+    	$tag_php->description = 'php related question';
+    	$tag_php->save();
+
+    	$tag_js = new Tag();
+    	$tag_js->name = 'js';
+    	$tag_js->description = 'Javascript related question';
+    	$tag_js->save();
+
+    	$tag_vue = new Tag();
+    	$tag_vue->name = 'vue';
+    	$tag_vue->description = 'Vue related question';
+    	$tag_vue->save();
+
+    	$tag_laravel = new Tag();
+    	$tag_laravel->name = 'laravel';
+    	$tag_laravel->description = 'Laravel related question';
+    	$tag_laravel->save();
+    }
+}
