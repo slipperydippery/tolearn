@@ -23,3 +23,7 @@ Route::get('/api/question/{question}/tag', 'ApiQuestionTagController@index');
 Route::post('/api/question/{question}/tag/store', 'ApiQuestionTagController@store');
 Route::get('/api/question/{question}/tag/{tag}/destroy', 'ApiQuestionTagController@destroy');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
