@@ -27,7 +27,7 @@ class QuestionController extends Controller
     public function create()
     {
         $question = Question::create([
-            'user_id' => Auth::user()->id;
+            'user_id' => Auth::user()->id,
         ]);
 
         return redirect()->route('question.edit', $question);
