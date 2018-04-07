@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,7 @@ class QuestionController extends Controller
     public function create()
     {
         $question = Question::create([
+            'user_id' => Auth::user()->id;
         ]);
 
         return redirect()->route('question.edit', $question);
