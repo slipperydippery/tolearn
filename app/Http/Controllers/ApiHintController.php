@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Resource;
+use Auth;
+use App\Hint;
 use Illuminate\Http\Request;
 
-class ResourceController extends Controller
+class ApiHintController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth')->except('index', 'show');
+        $this->middleware('hintowner')->only('update', 'destroy');
     }
     
     /**
@@ -46,10 +48,10 @@ class ResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Resource $resource)
+    public function show($id)
     {
         //
     }
@@ -57,10 +59,10 @@ class ResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $resource)
+    public function edit($id)
     {
         //
     }
@@ -69,22 +71,23 @@ class ResourceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource)
+    public function update(Request $request, Hint $hint)
     {
-        //
+        $hint->hint = $request->hint['hint'];
+        $hint->save();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resource $resource)
+    public function destroy(Hint $hint)
     {
-        //
+        $hint->delete();
     }
 }

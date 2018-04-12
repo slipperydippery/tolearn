@@ -17,6 +17,8 @@ window.Vue = require('vue');
 
 Vue.component('edit-question', require('./components/EditQuestion.vue'));
 Vue.component('edit-question-tags', require('./components/EditQuestionTags.vue'));
+Vue.component('edit-question-hints', require('./components/EditQuestionHints.vue'));
+Vue.component('question-hint', require('./components/QuestionHint.vue'));
 
 const app = new Vue({
     el: '#app'

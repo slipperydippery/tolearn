@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Resource;
+use App\Hint;
+use App\Question;
 use Illuminate\Http\Request;
 
-class ResourceController extends Controller
+class ApiQuestionHintController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth')->except('index', 'show');
+        $this->middleware('questionowner')->only('store');
     }
     
     /**
@@ -17,9 +19,9 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Question $question)
     {
-        //
+        return $question->hints;
     }
 
     /**
@@ -38,18 +40,24 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Question $question, Request $request)
     {
-        //
+        $hint = Hint::create([
+            'question_id' => $question->id,
+            'hint' => ''
+        ]);
+
+        $question->hints()->save($hint);
+        return $hint;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Resource $resource)
+    public function show($id)
     {
         //
     }
@@ -57,10 +65,10 @@ class ResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $resource)
+    public function edit($id)
     {
         //
     }
@@ -69,10 +77,10 @@ class ResourceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -80,10 +88,10 @@ class ResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Resource  $resource
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resource $resource)
+    public function destroy($id)
     {
         //
     }

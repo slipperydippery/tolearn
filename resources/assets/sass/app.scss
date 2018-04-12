@@ -1,12 +1,21 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
 
 // Variables
 @import "variables";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "partials/questions";
+@import "partials/editquestion";
+@import "partials/followup";
+@import "partials/hints";
+
+@import "partials/typography";
+
+@import "partials/buttons";
 
 .navbar-laravel {
   background-color: #fff;

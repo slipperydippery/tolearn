@@ -1,0 +1,28 @@
+.hints {
+	margin-bottom: 1rem;
+}
+
+.hint--container {
+	cursor: pointer;
+
+	.hint__reveal {
+		position: relative;
+		border: 1px solid $gray-700;
+		padding: 1rem;
+		.hint__blind {	
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		    background: $gray-700;
+		    color: white;
+		    h4 {
+		    	width: 100%;
+		    	text-align: center;
+		    	margin: 0;
+		    }
+		}
+	}
+}
+

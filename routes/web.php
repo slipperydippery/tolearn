@@ -18,10 +18,17 @@ Route::get('/', function () {
 Route::resource('question', 'QuestionController');
 
 Route::post('/api/question/{question}/update', 'ApiQuestionController@update');
+Route::post('/api/question/store', 'ApiQuestionController@store');
+
 Route::get('/api/tag', 'ApiTagController@index');
 Route::get('/api/question/{question}/tag', 'ApiQuestionTagController@index');
 Route::post('/api/question/{question}/tag/store', 'ApiQuestionTagController@store');
 Route::get('/api/question/{question}/tag/{tag}/destroy', 'ApiQuestionTagController@destroy');
+
+Route::post('/api/hint/{hint}/update', 'ApiHintController@update');
+Route::get('/api/hint/{hint}/destroy', 'ApiHintController@destroy');
+Route::get('/api/question/{question}/hint', 'ApiQuestionHintController@index')	;
+Route::post('/api/question/{question}/hint/store', 'ApiQuestionHintController@store');
 
 
 Auth::routes();

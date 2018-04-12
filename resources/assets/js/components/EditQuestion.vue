@@ -24,6 +24,13 @@
 					</textarea>
 				</div>
 
+				<edit-question-hints
+					:initquestion="initquestion"
+					:savecounter="savecounter"
+					@updatehints="getHints()"
+				>
+				</edit-question-hints>
+
 				<div class="form-group">	
 				    <label for="questionanswer">Answer</label>
 					<textarea 
@@ -36,20 +43,53 @@
 					</textarea>
 				</div>
 				<button class="btn btn-primary" @click.prevent="saveQuestion">Save Question</button>
+				<button class="btn btn-primary" @click.prevent="createFollowup">Add a Followup Question</button>
 			</form>
 		</div>
 		<div class="edit-question--output">
 			<h2 v-html="workQuestion.title"></h2>
-			<div class="questionquestion" v-html="workQuestion.question"></div>
-			<div class="questionanswer" v-html="workQuestion.answer"></div>
+			<div class="questionquestion">
+
+				<span 
+					v-for="string in codeBoi(workQuestion.question)" 
+					:key="codeBoi(workQuestion.question).indexOf(string)"
+					class="textboi--block"
+				>
+					<span 
+						v-for="(paragraph, index) in textBoi(string)"
+						class="code" 
+						:class=" { 'code__last': index == textBoi(string).length - 1 } "
+						v-if="codeBoi(workQuestion.question).indexOf(string) % 2" 
+					>
+						{{ paragraph }} <br>
+					</span>
+					<span v-else>
+						<p v-for="paragraph in textBoi(string)">
+							<template v-for="string in inlineBoi(paragraph)"> 
+								<span v-if="inlineBoi(paragraph).indexOf(string) % 2" class="code"> {{ string }} </span>
+								<template v-else> {{ string }} </template>
+							</template>
+						</p>
+					</span>
+
+				</span>
+			</div>
+			<div class="row hints" v-if="hints.length">
+				<question-hint
+					v-for="hint in hints"
+					:hint="hint"
+					:key="hint.id"
+					:index="hints.indexOf(hint)"
+				>
+				</question-hint>
+			</div>
+			<div class="questionanswer"> <p>{{ workQuestion.answer }}</p> </div>
 		</div>
 
 	</div>
 </template>
 
 <script>
-    import {store} from '../app.js';
-
     export default {
         props: [
         	'initquestion'
@@ -57,11 +97,14 @@
 
         data() {
             return {
-            	'workQuestion': {'title': '', 'question': '', 'answer': ''}
+            	'workQuestion': {'title': '', 'question': '', 'answer': ''},
+            	'savecounter': 0,
+            	'hints': []
             }
         },
 
         mounted() {
+        	this.getHints();
             this.workQuestion = Object.assign({}, this.initquestion);
             this.baseQuestion = Object.assign({}, this.initquestion);
             this.$nextTick(() => {
@@ -74,14 +117,60 @@
         },
 
         methods: {
+            textBoi(input) {
+                if(input){
+                    let paragraphs = [];
+                    input.split("\n").forEach(function(text){
+                        if(text.trim()){
+                            paragraphs.push(text);
+                        }
+                    })
+                    return paragraphs;
+                }
+            },
+
+            codeBoi(input) {
+            	if(input){
+            		let paragraphs = [];
+            		input.split('```').forEach(function(text){
+            			if(text.trim()){
+            				paragraphs.push(text);
+            			}
+            		});
+            		return paragraphs;
+            	}
+            },
+
+            inlineBoi(input) {
+            	if(input){
+            		let paragraphs = [];
+            		paragraphs = input.split('`');
+            		return paragraphs;
+            	}
+            },
+
         	saveQuestion() {
         		axios.post('/api/question/' + this.initquestion.id + '/update', {
         			'question': this.workQuestion,
         		})
 				.then(response => {
 					this.baseQuestion = Object.assign({}, this.workQuestion);
+					this.savecounter ++;
 				})
-        	}
+        	},
+
+        	createFollowup() {
+        		axios.post('/api/question/store', {
+        			'parent': this.workQuestion
+        		})
+        	},
+
+        	getHints() {
+        		axios.get('/api/question/' + this.initquestion.id + '/hint')
+        			.then(response => {
+        				this.hints = response.data;
+        			})
+        	},
         }
     }
 </script>

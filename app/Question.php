@@ -22,4 +22,29 @@ class Question extends Model
     {
     	return $this->hasMany(Resource::class);
     }
+
+    public function hints()
+    {
+    	return $this->hasMany(Hint::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    public function scorecards()
+    {
+        return $this->hasMany(Scorecard::class);
+    }
+
+    public function followup()
+    {
+        return $this->hasOne(Question::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Question::class, 'question_id');
+    }
 }

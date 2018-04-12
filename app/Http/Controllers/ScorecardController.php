@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Resource;
+use App\Scorecard;
 use Illuminate\Http\Request;
 
-class ResourceController extends Controller
+class ScorecardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index', 'show');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -46,10 +41,10 @@ class ResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Resource  $resource
+     * @param  \App\Scorecard  $scorecard
      * @return \Illuminate\Http\Response
      */
-    public function show(Resource $resource)
+    public function show(Scorecard $scorecard)
     {
         //
     }
@@ -57,10 +52,10 @@ class ResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Resource  $resource
+     * @param  \App\Scorecard  $scorecard
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $resource)
+    public function edit(Scorecard $scorecard)
     {
         //
     }
@@ -69,10 +64,10 @@ class ResourceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Resource  $resource
+     * @param  \App\Scorecard  $scorecard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource)
+    public function update(Request $request, Scorecard $scorecard)
     {
         //
     }
@@ -80,10 +75,10 @@ class ResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Resource  $resource
+     * @param  \App\Scorecard  $scorecard
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resource $resource)
+    public function destroy(Scorecard $scorecard)
     {
         //
     }

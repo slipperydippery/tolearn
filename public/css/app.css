@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);/*!
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);/*!
  * Bootstrap v4.0.0 (https://getbootstrap.com)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
@@ -9992,6 +9992,70 @@ a.text-dark:focus {
   .table-bordered td {
     border: 1px solid #ddd !important;
   }
+}
+
+.edit-question--container {
+  border: 1px solid #ced4da;
+}
+
+.edit-question .edit-question--input {
+  border-bottom: 1px solid #ced4da;
+}
+
+.edit-question .edit-question--input,
+.edit-question .edit-question--output {
+  padding: 2rem 0;
+}
+
+.edit--question--followup {
+  background: #e9ecef;
+}
+
+.hints {
+  margin-bottom: 1rem;
+}
+
+.hint--container {
+  cursor: pointer;
+}
+
+.hint--container .hint__reveal {
+  position: relative;
+  border: 1px solid #495057;
+  padding: 1rem;
+}
+
+.hint--container .hint__reveal .hint__blind {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #495057;
+  color: white;
+}
+
+.hint--container .hint__reveal .hint__blind h4 {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+.code {
+  font-family: 'Source Code Pro', monospace;
+}
+
+.code__last {
+  margin-bottom: 1rem;
+}
+
+.textboi--block {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.btn-outline-nooutline {
+  border-color: rgba(255, 255, 255, 0);
 }
 
 .navbar-laravel {

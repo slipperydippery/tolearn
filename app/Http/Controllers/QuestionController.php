@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('questionowner')->only('edit', 'update', 'destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *

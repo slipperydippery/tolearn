@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ApiQuestionTagController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('questionowner')->only('store', 'destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *

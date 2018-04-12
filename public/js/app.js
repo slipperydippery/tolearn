@@ -13893,6 +13893,8 @@ window.Vue = __webpack_require__(36);
 
 Vue.component('edit-question', __webpack_require__(48));
 Vue.component('edit-question-tags', __webpack_require__(51));
+Vue.component('edit-question-hints', __webpack_require__(54));
+Vue.component('question-hint', __webpack_require__(57));
 
 var app = new Vue({
   el: '#app'
@@ -47281,8 +47283,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__app_js__);
 //
 //
 //
@@ -47332,20 +47332,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['initquestion'],
 
     data: function data() {
         return {
-            'workQuestion': { 'title': '', 'question': '', 'answer': '' }
+            'workQuestion': { 'title': '', 'question': '', 'answer': '' },
+            'savecounter': 0,
+            'hints': []
         };
     },
     mounted: function mounted() {
         var _this = this;
 
+        this.getHints();
         this.workQuestion = Object.assign({}, this.initquestion);
         this.baseQuestion = Object.assign({}, this.initquestion);
         this.$nextTick(function () {
@@ -47358,6 +47401,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {},
 
     methods: {
+        textBoi: function textBoi(input) {
+            if (input) {
+                var paragraphs = [];
+                input.split("\n").forEach(function (text) {
+                    if (text.trim()) {
+                        paragraphs.push(text);
+                    }
+                });
+                return paragraphs;
+            }
+        },
+        codeBoi: function codeBoi(input) {
+            if (input) {
+                var paragraphs = [];
+                input.split('```').forEach(function (text) {
+                    if (text.trim()) {
+                        paragraphs.push(text);
+                    }
+                });
+                return paragraphs;
+            }
+        },
+        inlineBoi: function inlineBoi(input) {
+            if (input) {
+                var paragraphs = [];
+                paragraphs = input.split('`');
+                return paragraphs;
+            }
+        },
         saveQuestion: function saveQuestion() {
             var _this2 = this;
 
@@ -47365,6 +47437,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'question': this.workQuestion
             }).then(function (response) {
                 _this2.baseQuestion = Object.assign({}, _this2.workQuestion);
+                _this2.savecounter++;
+            });
+        },
+        createFollowup: function createFollowup() {
+            axios.post('/api/question/store', {
+                'parent': this.workQuestion
+            });
+        },
+        getHints: function getHints() {
+            var _this3 = this;
+
+            axios.get('/api/question/' + this.initquestion.id + '/hint').then(function (response) {
+                _this3.hints = response.data;
             });
         }
     }
@@ -47449,6 +47534,18 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
+          _c("edit-question-hints", {
+            attrs: {
+              initquestion: _vm.initquestion,
+              savecounter: _vm.savecounter
+            },
+            on: {
+              updatehints: function($event) {
+                _vm.getHints()
+              }
+            }
+          }),
+          _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "questionanswer" } }, [
               _vm._v("Answer")
@@ -47494,6 +47591,20 @@ var render = function() {
               }
             },
             [_vm._v("Save Question")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.createFollowup($event)
+                }
+              }
+            },
+            [_vm._v("Add a Followup Question")]
           )
         ],
         1
@@ -47503,15 +47614,69 @@ var render = function() {
     _c("div", { staticClass: "edit-question--output" }, [
       _c("h2", { domProps: { innerHTML: _vm._s(_vm.workQuestion.title) } }),
       _vm._v(" "),
-      _c("div", {
-        staticClass: "questionquestion",
-        domProps: { innerHTML: _vm._s(_vm.workQuestion.question) }
-      }),
+      _c(
+        "div",
+        { staticClass: "questionquestion" },
+        _vm._l(_vm.codeBoi(_vm.workQuestion.question), function(string) {
+          return _c(
+            "span",
+            {
+              key: _vm.codeBoi(_vm.workQuestion.question).indexOf(string),
+              staticClass: "textboi--block"
+            },
+            _vm._l(_vm.textBoi(string), function(paragraph, index) {
+              return _vm.codeBoi(_vm.workQuestion.question).indexOf(string) % 2
+                ? _c(
+                    "span",
+                    {
+                      staticClass: "code",
+                      class: {
+                        code__last: index == _vm.textBoi(string).length - 1
+                      }
+                    },
+                    [_vm._v("\n\t\t\t\t\t" + _vm._s(paragraph) + " "), _c("br")]
+                  )
+                : _c(
+                    "span",
+                    _vm._l(_vm.textBoi(string), function(paragraph) {
+                      return _c(
+                        "p",
+                        [
+                          _vm._l(_vm.inlineBoi(paragraph), function(string) {
+                            return [
+                              _vm.inlineBoi(paragraph).indexOf(string) % 2
+                                ? _c("span", { staticClass: "code" }, [
+                                    _vm._v(" " + _vm._s(string) + " ")
+                                  ])
+                                : [_vm._v(" " + _vm._s(string) + " ")]
+                            ]
+                          })
+                        ],
+                        2
+                      )
+                    })
+                  )
+            })
+          )
+        })
+      ),
       _vm._v(" "),
-      _c("div", {
-        staticClass: "questionanswer",
-        domProps: { innerHTML: _vm._s(_vm.workQuestion.answer) }
-      })
+      _vm.hints.length
+        ? _c(
+            "div",
+            { staticClass: "row hints" },
+            _vm._l(_vm.hints, function(hint) {
+              return _c("question-hint", {
+                key: hint.id,
+                attrs: { hint: hint, index: _vm.hints.indexOf(hint) }
+              })
+            })
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "questionanswer" }, [
+        _c("p", [_vm._v(_vm._s(_vm.workQuestion.answer))])
+      ])
     ])
   ])
 }
@@ -47656,7 +47821,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "question-tags" }, [
+  return _c("div", { staticClass: "question-tags form-group" }, [
     _c(
       "div",
       { staticClass: "btn-group-toggle" },
@@ -47692,6 +47857,363 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-9fe3e180", module.exports)
+  }
+}
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(40)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\EditQuestionHints.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-15342435", Component.options)
+  } else {
+    hotAPI.reload("data-v-15342435", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['initquestion', 'savecounter'],
+
+    data: function data() {
+        return {
+            'hints': [],
+            'hintsToDelete': []
+        };
+    },
+    mounted: function mounted() {
+        this.getHints();
+    },
+
+
+    watch: {
+        savecounter: function savecounter(newVal, oldVal) {
+            this.saveHints();
+            this.deleteHints();
+        }
+    },
+
+    computed: {},
+
+    methods: {
+        getHints: function getHints() {
+            var _this = this;
+
+            axios.get('/api/question/' + this.initquestion.id + '/hint').then(function (response) {
+                _this.hints = response.data;
+            });
+        },
+        addHint: function addHint() {
+            var _this2 = this;
+
+            axios.post('/api/question/' + this.initquestion.id + '/hint/store', {
+                'hint': ''
+            }).then(function (response) {
+                console.log(response.data);
+                _this2.hints.push(response.data);
+                _this2.$emit('updatehints');
+            });
+        },
+        removeHint: function removeHint(hint) {
+            console.log(hint);
+            this.hintsToDelete.push(hint);
+            this.hints.splice(this.hints.indexOf(hint), 1);
+        },
+        saveHints: function saveHints() {
+            var _this3 = this;
+
+            this.hints.forEach(function (hint) {
+                axios.post('/api/hint/' + hint.id + '/update', {
+                    'hint': hint
+                }).then(function (response) {
+                    _this3.$emit('updatehints');
+                });
+            });
+        },
+        deleteHints: function deleteHints() {
+            var _this4 = this;
+
+            this.hintsToDelete.forEach(function (hint) {
+                axios.get('/api/hint/' + hint.id + '/destroy');
+            }).then(function (response) {
+                _this4.$emit('updatehints');
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "hints--input" }, [
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", { attrs: { for: "questionquestion" } }, [_vm._v("Hints")]),
+        _vm._v(" "),
+        _vm._l(_vm.hints, function(hint) {
+          return _c("div", { staticClass: "hints--input--single row" }, [
+            _c("div", { staticClass: "col-11" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: hint.hint,
+                    expression: "hint.hint"
+                  }
+                ],
+                ref: "hintinput",
+                refInFor: true,
+                staticClass: "form-control",
+                attrs: { id: "questionhint", type: "text", required: "" },
+                domProps: { value: hint.hint },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(hint, "hint", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger btn-sm",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.removeHint(hint)
+                    }
+                  }
+                },
+                [_vm._v("X")]
+              )
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            _vm.addHint()
+          }
+        }
+      },
+      [_vm._v("+ Hint")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-15342435", module.exports)
+  }
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(40)
+/* script */
+var __vue_script__ = __webpack_require__(58)
+/* template */
+var __vue_template__ = __webpack_require__(59)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\QuestionHint.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1092bc04", Component.options)
+  } else {
+    hotAPI.reload("data-v-1092bc04", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['hint', 'index'],
+
+    data: function data() {
+        return {
+            'hidden': true
+        };
+    },
+    mounted: function mounted() {},
+
+
+    computed: {},
+
+    methods: {
+        toggleReveal: function toggleReveal() {
+            this.hidden = !this.hidden;
+        }
+    }
+});
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "hint--container col-sm-4",
+      on: {
+        click: function($event) {
+          _vm.toggleReveal()
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "hint__reveal" }, [
+        _vm.hidden
+          ? _c(
+              "div",
+              { staticClass: "hint__blind d-flex align-items-center" },
+              [_c("h4", [_vm._v("Hint " + _vm._s(_vm.index + 1))])]
+            )
+          : _vm._e(),
+        _vm._v("\n\t\t" + _vm._s(_vm.hint.hint) + "\n\t")
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1092bc04", module.exports)
   }
 }
 

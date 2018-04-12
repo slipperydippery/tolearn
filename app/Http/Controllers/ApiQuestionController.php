@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Question;
 use Illuminate\Http\Request;
 
 class ApiQuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('questionowner')->only('update');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +42,14 @@ class ApiQuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $question = Question::create([
+            'user_id' => Auth::user()->id
+        ]);
+        if($request->parent){
+            $parent = Question::find($request->parent['id']);
+            $parent->followup()->save($question);
+        }
+        return $question;
     }
 
     /**
