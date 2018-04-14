@@ -10043,6 +10043,12 @@ a.text-dark:focus {
 
 .code {
   font-family: 'Source Code Pro', monospace;
+  background: #e9ecef;
+  padding: 0 .5rem;
+}
+
+.code--block {
+  background: #e9ecef;
 }
 
 .code__last {
@@ -10050,7 +10056,7 @@ a.text-dark:focus {
 }
 
 .textboi--block {
-  display: inline-block;
+  display: block;
   margin-bottom: 1rem;
 }
 

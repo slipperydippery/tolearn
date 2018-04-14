@@ -1,6 +1,12 @@
 .code {
 	// background: red;
 	font-family: 'Source Code Pro', monospace;
+	background: $gray-200;
+	padding: 0 .5rem;
+}
+
+.code--block {
+	background: $gray-200;
 }
 
 .code__last {
@@ -8,6 +14,6 @@
 }
 
 .textboi--block {
-	display: inline-block;	
+	display: block;	
 	margin-bottom: 1rem;
 }

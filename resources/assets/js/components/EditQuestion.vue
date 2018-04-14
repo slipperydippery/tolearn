@@ -20,6 +20,7 @@
 		                oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
 		                ref="questioninput"			
 						v-model="workQuestion.question"
+						placeholder="Use ``` to start and end a code-block, use ` to start and end inline code" 
 					>
 					</textarea>
 				</div>
@@ -51,19 +52,19 @@
 			<div class="questionquestion">
 
 				<span 
-					v-for="string in codeBoi(workQuestion.question)" 
-					:key="codeBoi(workQuestion.question).indexOf(string)"
+					v-for="string in sortBoi(workQuestion.question)" 
+					:key="sortBoi(workQuestion.question).indexOf(string)"
 					class="textboi--block"
+					:class=" {'code--block code' : ( sortBoi(workQuestion.question).indexOf(string) % 2 )} "
 				>
 					<span 
-						v-for="(paragraph, index) in textBoi(string)"
-						class="code" 
-						:class=" { 'code__last': index == textBoi(string).length - 1 } "
-						v-if="codeBoi(workQuestion.question).indexOf(string) % 2" 
+						v-for="(paragraph, index) in codeBoi(string)"
+						:class=" { 'code__last': index == codeBoi(string).length - 1 } "
+						v-if="sortBoi(workQuestion.question).indexOf(string) % 2" 
 					>
-						{{ paragraph }} <br>
+						<span v-for="n in (paragraph.spacecount + paragraph.tabcount)">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ paragraph.text }} <br>
 					</span>
-					<span v-else>
+					<span v-if="! (sortBoi(workQuestion.question).indexOf(string) % 2)">
 						<p v-for="paragraph in textBoi(string)">
 							<template v-for="string in inlineBoi(paragraph)"> 
 								<span v-if="inlineBoi(paragraph).indexOf(string) % 2" class="code"> {{ string }} </span>
@@ -129,16 +130,33 @@
                 }
             },
 
-            codeBoi(input) {
+            sortBoi(input) {
             	if(input){
             		let paragraphs = [];
             		input.split('```').forEach(function(text){
-            			if(text.trim()){
-            				paragraphs.push(text);
-            			}
+           				paragraphs.push(text);
             		});
             		return paragraphs;
             	}
+            },
+
+            codeBoi(input) {
+                if(input){
+                    let paragraphs = [];
+                    input.split("\n").forEach(function(text){
+                    	let tabcount = (text.match(/\t/g) || []).length;
+                    	text = text.replace(/\t/g, '');
+                    	let spacecount = Math.floor(text.search(/\S|$/) / 4);
+                    	if(text.trim()){
+							paragraphs.push({
+								'spacecount': spacecount,
+								'tabcount': tabcount,
+								'text': text,
+							});
+						}
+                    })
+                    return paragraphs;
+                }
             },
 
             inlineBoi(input) {

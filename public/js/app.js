@@ -47374,6 +47374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['initquestion'],
@@ -47412,12 +47413,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return paragraphs;
             }
         },
-        codeBoi: function codeBoi(input) {
+        sortBoi: function sortBoi(input) {
             if (input) {
                 var paragraphs = [];
                 input.split('```').forEach(function (text) {
+                    paragraphs.push(text);
+                });
+                return paragraphs;
+            }
+        },
+        codeBoi: function codeBoi(input) {
+            if (input) {
+                var paragraphs = [];
+                input.split("\n").forEach(function (text) {
+                    var tabcount = (text.match(/\t/g) || []).length;
+                    text = text.replace(/\t/g, '');
+                    var spacecount = Math.floor(text.search(/\S|$/) / 4);
                     if (text.trim()) {
-                        paragraphs.push(text);
+                        paragraphs.push({
+                            'spacecount': spacecount,
+                            'tabcount': tabcount,
+                            'text': text
+                        });
                     }
                 });
                 return paragraphs;
@@ -47520,7 +47537,9 @@ var render = function() {
               attrs: {
                 id: "questionquestion",
                 oninput:
-                  'this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
+                  'this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"',
+                placeholder:
+                  "Use ``` to start and end a code-block, use ` to start and end inline code"
               },
               domProps: { value: _vm.workQuestion.question },
               on: {
@@ -47617,26 +47636,45 @@ var render = function() {
       _c(
         "div",
         { staticClass: "questionquestion" },
-        _vm._l(_vm.codeBoi(_vm.workQuestion.question), function(string) {
+        _vm._l(_vm.sortBoi(_vm.workQuestion.question), function(string) {
           return _c(
             "span",
             {
-              key: _vm.codeBoi(_vm.workQuestion.question).indexOf(string),
-              staticClass: "textboi--block"
+              key: _vm.sortBoi(_vm.workQuestion.question).indexOf(string),
+              staticClass: "textboi--block",
+              class: {
+                "code--block code":
+                  _vm.sortBoi(_vm.workQuestion.question).indexOf(string) % 2
+              }
             },
-            _vm._l(_vm.textBoi(string), function(paragraph, index) {
-              return _vm.codeBoi(_vm.workQuestion.question).indexOf(string) % 2
+            [
+              _vm._l(_vm.codeBoi(string), function(paragraph, index) {
+                return _vm.sortBoi(_vm.workQuestion.question).indexOf(string) %
+                  2
+                  ? _c(
+                      "span",
+                      {
+                        class: {
+                          code__last: index == _vm.codeBoi(string).length - 1
+                        }
+                      },
+                      [
+                        _vm._l(
+                          paragraph.spacecount + paragraph.tabcount,
+                          function(n) {
+                            return _c("span", [_vm._v("    ")])
+                          }
+                        ),
+                        _vm._v(_vm._s(paragraph.text) + " "),
+                        _c("br")
+                      ],
+                      2
+                    )
+                  : _vm._e()
+              }),
+              _vm._v(" "),
+              !(_vm.sortBoi(_vm.workQuestion.question).indexOf(string) % 2)
                 ? _c(
-                    "span",
-                    {
-                      staticClass: "code",
-                      class: {
-                        code__last: index == _vm.textBoi(string).length - 1
-                      }
-                    },
-                    [_vm._v("\n\t\t\t\t\t" + _vm._s(paragraph) + " "), _c("br")]
-                  )
-                : _c(
                     "span",
                     _vm._l(_vm.textBoi(string), function(paragraph) {
                       return _c(
@@ -47656,7 +47694,9 @@ var render = function() {
                       )
                     })
                   )
-            })
+                : _vm._e()
+            ],
+            2
           )
         })
       ),
