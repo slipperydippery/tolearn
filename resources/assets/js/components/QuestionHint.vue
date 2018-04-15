@@ -4,7 +4,7 @@
 			<div class="hint__blind d-flex align-items-center" v-if="hidden">
 				<h4>Hint {{ index + 1 }}</h4>
 			</div>
-			<vue-markdown :source="hint.hint"></vue-markdown>
+			<vue-markdown :source="hint.hint" v-if="hint.hint"></vue-markdown>
 		</div>
 	</div>
 </template>

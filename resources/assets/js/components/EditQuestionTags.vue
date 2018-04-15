@@ -1,7 +1,7 @@
 <template>
 	<div class="question-tags form-group">
 		<div class="btn-group-toggle" >
-			<label class="btn btn-secondary" :class="{ 'active' : isChecked(tag) }" v-for="tag in tags">
+			<label class="btn btn-outline-secondary" :class="{ 'active' : isChecked(tag) }" v-for="tag in tags">
 				<input type="checkbox" :checked="isChecked(tag)" autocomplete="off" @click.prevent="toggleTag(tag)"> {{ tag.name }}
 			</label>
 		</div>

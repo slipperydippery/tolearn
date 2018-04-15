@@ -3,15 +3,18 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
 
+@import "partials/colors";
+
 // Variables
 @import "variables";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-
+@import "partials/layout";
 @import "partials/questions";
 @import "partials/editquestion";
+@import "partials/question";
 @import "partials/followup";
 @import "partials/hints";
 

@@ -1,6 +1,6 @@
 <template>
 	<div class="hints--input">
-		<div class="form-group">
+		<div class="form-group" v-if="hints">
 		    <label for="questionquestion">Hints</label>
 		    <div class="hints--input--single row" v-for="hint in hints">
 		    	<div class="col-11">
@@ -10,8 +10,8 @@
 					<button class="btn btn-danger btn-sm" @click.prevent="removeHint(hint)">X</button>
 				</div>
 		    </div>
-		</div>
-		<button class="btn btn-primary" @click.prevent="addHint()">+ Hint</button>
+        </div>
+		<button class="btn btn-outline-primary btn-margin-bottom" @click.prevent="addHint()">+ Hint</button>
 	</div>
 </template>
 
@@ -69,23 +69,30 @@
             },
 
             saveHints() {
-                this.hints.forEach(hint => {
-                    axios.post('/api/hint/' + hint.id + '/update', {
-                        'hint': hint
-                    })
-                    .then(response => {
-                        this.$emit('updatehints');
-                    })
-        		})
+                if(this.hints.length){
+                    console.log('saving');
+                    console.log(this.hints.length);
+                    console.log(this.hints);
+                    this.hints.forEach(hint => {
+                        axios.post('/api/hint/' + hint.id + '/update', {
+                            'hint': hint
+                        })
+                        .then(response => {
+                            this.$emit('updatehints');
+                        })
+            		})
+                }
         	},
 
         	deleteHints() {
-        		this.hintsToDelete.forEach(hint => {
-        			axios.get('/api/hint/' + hint.id + '/destroy')
-        		})
-                .then(response => {
-                    this.$emit('updatehints');
-                })
+                if(this.hintsToDelete.length){
+            		this.hintsToDelete.forEach(hint => {
+            			axios.get('/api/hint/' + hint.id + '/destroy')
+                        .then(response => {
+                            this.$emit('updatehints');
+                        })
+                    })
+                }
         	}
         }
     }

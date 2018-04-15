@@ -15,6 +15,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('show-question', require('./components/ShowQuestion.vue'));
 Vue.component('edit-question', require('./components/EditQuestion.vue'));
 Vue.component('edit-question-tags', require('./components/EditQuestionTags.vue'));
 Vue.component('edit-question-hints', require('./components/EditQuestionHints.vue'));

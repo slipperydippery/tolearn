@@ -1,9 +1,9 @@
 <template>
-	<div class="edit-question">
-		<div class="edit-question--input">
+	<div class="row edit-question">
+		<div class="col-12 edit-question--input main-container">
 			<form>
 				<div class="form-group">
-				    <label for="questiontitle">Question Title</label>
+				    <label for="questiontitle">Title</label>
 					<input id="questiontitle" class="form-control" type="text" v-model="workQuestion.title" ref="titleinput">
 				</div>
 
@@ -44,13 +44,17 @@
 					</textarea>
 				</div>
 				<button class="btn btn-primary" @click.prevent="saveQuestion">Save Question</button>
-				<button class="btn btn-primary" @click.prevent="createFollowup">Add a Followup Question</button>
 			</form>
 		</div>
-		<div class="edit-question--output">
-			<h2 v-html="workQuestion.title"></h2>
+
+		<div class="col-12 edit-question--output main-container">
+			<div class="row main-container--head">
+				<div class="col-12">
+					<h3> {{ workQuestion.title }} </h3>
+				</div>
+			</div>
 			<div class="questionquestion">
-				<vue-markdown :source="workQuestion.question"></vue-markdown>
+				<vue-markdown :source="workQuestion.question" v-if="workQuestion.question"></vue-markdown>
 			</div>
 			<div class="row hints" v-if="hints.length">
 				<question-hint
@@ -62,7 +66,7 @@
 				</question-hint>
 			</div>
 			<div class="questionanswer"> 
-				<vue-markdown :source="workQuestion.answer"></vue-markdown>
+				<vue-markdown :source="workQuestion.answer" v-if="workQuestion.answer"></vue-markdown>
 			</div>
 			
 		</div>

@@ -8,16 +8,18 @@
 		<div class="row"></div>
 		<div class="row edit-question--container">
 			<div class="col-12">
-				@if ($question->followup || $question->parent)
-					<div class="row edit--question--followup">
-						@if ($question->parent)
-							<div class="col followup--parent col-auto mr-auto"> <a href=" {{ route('question.edit', $question->parent) }} " class="btn btn-outline-secondary btn-outline-nooutline"> << Parent </a> </div>
-						@endif
-						@if ($question->followup)
-							<div class="col followup--child ml-auto col-auto"> <a href=" {{ route('question.edit', $question->followup) }} " class="btn btn-outline-secondary btn-outline-nooutline"> Child >> </a> </div>
-						@endif
-					</div>
-				@endif
+				<div class="row edit--question--followup main-container--head">
+					@if ($question->parent)
+						<div class="col followup--parent col-auto mr-auto"> <a href=" {{ route('question.edit', $question->parent) }} " class="btn btn-outline-dark btn-outline-nooutline"> << Edit Parent </a> </div>
+					@else
+						<div class="col followup--parent col-auto mr-auto"> <a href=" {{ route('question.followup.storeparent', $question) }} " class="btn btn-outline-dark btn-outline-nooutline"> << Create Parent </a> </div>
+					@endif
+					@if ($question->followup)
+						<div class="col followup--child ml-auto col-auto"> <a href=" {{ route('question.edit', $question->followup) }} " class="btn btn-outline-dark btn-outline-nooutline"> Edit followup >> </a> </div>
+					@else
+						<div class="col followup--child ml-auto col-auto"> <a href=" {{ route('question.followup.storefollowup', $question) }} " class="btn btn-outline-dark btn-outline-nooutline"> Create Followup >> </a> </div>
+					@endif
+				</div>
 				<edit-question
 					:initquestion = " {{ $question }} "
 				>

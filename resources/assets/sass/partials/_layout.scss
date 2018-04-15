@@ -1,0 +1,10 @@
+.main-container {
+	background: #ffffff;
+	box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+
+	.main-container--head {
+		background: $gray-200;
+		padding: 1rem 0;
+		margin-bottom: 2rem;
+	}
+}

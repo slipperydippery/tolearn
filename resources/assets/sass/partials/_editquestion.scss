@@ -1,13 +1,17 @@
 .edit-question--container {
-	border: 1px solid $gray-400;
-	
 }
 
 .edit-question {
 	.edit-question--input {
 		border-bottom: 1px solid $gray-400;
 	}
-	.edit-question--input, .edit-question--output {
-		padding: 2rem 0;
+	.edit-question--input {
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+	}
+	.edit-question--output {
+		margin-top: 1rem;
+		padding-bottom: 2rem;
 	}
 }
+

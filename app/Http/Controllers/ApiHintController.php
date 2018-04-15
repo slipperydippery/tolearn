@@ -89,5 +89,6 @@ class ApiHintController extends Controller
     public function destroy(Hint $hint)
     {
         $hint->delete();
+        return 'destroyed';
     }
 }

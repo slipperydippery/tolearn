@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Route::resource('question', 'QuestionController');
 
+Route::get('/question/{question}/followup/storefollowup', 'QuestionFollowupController@storefollowup')->name('question.followup.storefollowup');
+Route::get('/question/{question}/followup/storeparent', 'QuestionFollowupController@storeparent')->name('question.followup.storeparent');
+
 Route::post('/api/question/{question}/update', 'ApiQuestionController@update');
 Route::post('/api/question/store', 'ApiQuestionController@store');
 
