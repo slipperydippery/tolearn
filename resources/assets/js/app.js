@@ -21,5 +21,5 @@ Vue.component('edit-question-hints', require('./components/EditQuestionHints.vue
 Vue.component('question-hint', require('./components/QuestionHint.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
 });

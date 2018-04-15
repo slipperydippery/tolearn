@@ -4,17 +4,23 @@
 			<div class="hint__blind d-flex align-items-center" v-if="hidden">
 				<h4>Hint {{ index + 1 }}</h4>
 			</div>
-			{{ hint.hint }}
+			<vue-markdown :source="hint.hint"></vue-markdown>
 		</div>
 	</div>
 </template>
 
 <script>
+    import VueMarkdown from 'vue-markdown';
+
     export default {
         props: [
         	'hint',
         	'index'
         ],
+
+	    components: {
+	        VueMarkdown
+	    },
 
         data() {
             return {

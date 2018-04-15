@@ -50,30 +50,7 @@
 		<div class="edit-question--output">
 			<h2 v-html="workQuestion.title"></h2>
 			<div class="questionquestion">
-
-				<span 
-					v-for="string in sortBoi(workQuestion.question)" 
-					:key="sortBoi(workQuestion.question).indexOf(string)"
-					class="textboi--block"
-					:class=" {'code--block code' : ( sortBoi(workQuestion.question).indexOf(string) % 2 )} "
-				>
-					<span 
-						v-for="(paragraph, index) in codeBoi(string)"
-						:class=" { 'code__last': index == codeBoi(string).length - 1 } "
-						v-if="sortBoi(workQuestion.question).indexOf(string) % 2" 
-					>
-						<span v-for="n in (paragraph.spacecount + paragraph.tabcount)">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ paragraph.text }} <br>
-					</span>
-					<span v-if="! (sortBoi(workQuestion.question).indexOf(string) % 2)">
-						<p v-for="paragraph in textBoi(string)">
-							<template v-for="string in inlineBoi(paragraph)"> 
-								<span v-if="inlineBoi(paragraph).indexOf(string) % 2" class="code"> {{ string }} </span>
-								<template v-else> {{ string }} </template>
-							</template>
-						</p>
-					</span>
-
-				</span>
+				<vue-markdown :source="workQuestion.question"></vue-markdown>
 			</div>
 			<div class="row hints" v-if="hints.length">
 				<question-hint
@@ -84,17 +61,27 @@
 				>
 				</question-hint>
 			</div>
-			<div class="questionanswer"> <p>{{ workQuestion.answer }}</p> </div>
+			<div class="questionanswer"> 
+				<vue-markdown :source="workQuestion.answer"></vue-markdown>
+			</div>
+			
 		</div>
 
 	</div>
 </template>
 
+
 <script>
+    import VueMarkdown from 'vue-markdown';
+
     export default {
         props: [
         	'initquestion'
-        ],
+        ],	
+
+	    components: {
+	        VueMarkdown
+	    },
 
         data() {
             return {

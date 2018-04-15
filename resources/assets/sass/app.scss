@@ -8,12 +8,15 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
 @import "partials/questions";
 @import "partials/editquestion";
 @import "partials/followup";
 @import "partials/hints";
 
 @import "partials/typography";
+@import "partials/markdown";
 
 @import "partials/buttons";
 
