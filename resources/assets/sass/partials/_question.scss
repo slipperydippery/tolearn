@@ -10,4 +10,48 @@
 	background-color: #e9f5ea;
 	border: 1px solid #a1cc98;
 	border-radius: 4px;
+
+	h4, h5 {
+		text-align: center;
+		margin: 0;
+	}
+}
+
+.useranswer {
+	border-top: 1px solid $gray-400;
+	padding-top: 1rem;
+}
+
+.rateanswer {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	.rateanswer--answer-container {
+		text-align: right;
+		.questionscore {
+			vertical-align: middle;
+			font-size: 1.6rem;
+			background: slategrey;
+			line-height: 36px;
+			padding: .2rem .7rem .4rem .9rem;
+			border-radius: .2rem;
+			color: white;
+		}
+		.rateanswer--answer {
+			transition: all .2s;
+			vertical-align: middle;
+			line-height: 36px;
+		}
+	}
+}
+
+.answercorrect:hover {
+	color: $success;
+}
+
+.answerfalse:hover {
+	color: $danger;
+}
+
+.answernext--container:hover .answernext{
+	color: $info;
 }

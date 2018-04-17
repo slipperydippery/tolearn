@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'questionowner' => \App\Http\Middleware\VerifyQuestionOwner::class,
         'hintowner' => \App\Http\Middleware\VerifyHintOwner::class,
+        'scorecardowner' => \App\Http\Middleware\VerifyScorecardOwner::class,
     ];
 }

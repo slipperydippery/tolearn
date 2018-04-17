@@ -15,7 +15,7 @@ class CreateScorecardsTable extends Migration
     {
         Schema::create('scorecards', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('moving_average')->unsigned();
+            $table->integer('moving_average')->unsigned()->default(1);
             $table->tinyInteger('weight')->unsigned()->default(3);
             $table->boolean('favorite')->default(false);
             $table->boolean('skip')->default(false);

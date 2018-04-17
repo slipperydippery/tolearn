@@ -30,8 +30,11 @@ Route::get('/api/question/{question}/tag/{tag}/destroy', 'ApiQuestionTagControll
 
 Route::post('/api/hint/{hint}/update', 'ApiHintController@update');
 Route::get('/api/hint/{hint}/destroy', 'ApiHintController@destroy');
-Route::get('/api/question/{question}/hint', 'ApiQuestionHintController@index')	;
+Route::get('/api/question/{question}/hint', 'ApiQuestionHintController@index');
 Route::post('/api/question/{question}/hint/store', 'ApiQuestionHintController@store');
+
+Route::get('/api/scorecard/{scorecard}/answer', 'ApiScorecardAnswerController@index');
+Route::post('/api/question/{question}/answer/store', 'ApiQuestionAnswerController@store');
 
 
 Auth::routes();

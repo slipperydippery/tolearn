@@ -7,7 +7,8 @@
 
 	.hint__reveal {
 		position: relative;
-		border: 1px solid $gray-700;
+		// border: 1px solid $gray-700;
+		border: 1px solid $gray-200;
 		padding: 1rem;
 		.hint__blind {	
 			position: absolute;
@@ -15,9 +16,11 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-		    background: $gray-700;
-		    color: white;
-		    h4 {
+			background: #fdfdfd;
+			color: #000000;
+		    // box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.3);
+			border-radius: 0.2rem;
+		    h4, h5 {
 		    	width: 100%;
 		    	text-align: center;
 		    	margin: 0;

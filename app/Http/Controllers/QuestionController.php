@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Question;
+use App\Scorecard;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -58,6 +59,17 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
+        if(Auth::user()){
+            if( ! $question->scorecards->where('user_id', Auth::user()->id)->count() ) {
+                Scorecard::create([
+                    'user_id' => Auth::user()->id,
+                    'question_id' => $question->id,
+                    'moving_average' => 1
+                ]);
+            } 
+            $scorecard = $question->scorecards->where('user_id', Auth::user()->id)->first();
+            return view('question.show', compact('question', 'scorecard'));
+        }
         return view('question.show', compact('question'));
     }
 

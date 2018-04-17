@@ -10,6 +10,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "partials/bootstrapoverride";
+
+@import "partials/typography";
+@import "partials/materialicons";
 
 @import "partials/layout";
 @import "partials/questions";
@@ -18,9 +22,8 @@
 @import "partials/followup";
 @import "partials/hints";
 
-@import "partials/typography";
 @import "partials/markdown";
-
+@import "partials/elements";
 @import "partials/buttons";
 
 .navbar-laravel {
