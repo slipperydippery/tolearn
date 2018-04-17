@@ -20,6 +20,11 @@
 										<a href=" {{ route('question.edit', $question) }} " class="ml-3"><i class="material-icons material-icons--h3">edit</i></a>
 									@endif
 								</h3>
+								<rate-question
+									:question = " {{ $question }} "
+									:scorecardid = " {{ $scorecardid }} "
+								>
+								</rate-question>
 							</div>
 						</div>
 					</div>

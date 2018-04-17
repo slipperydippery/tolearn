@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('show-question', require('./components/ShowQuestion.vue'));
+Vue.component('rate-question', require('./components/RateQuestion.vue'));
 Vue.component('edit-question', require('./components/EditQuestion.vue'));
 Vue.component('edit-question-tags', require('./components/EditQuestionTags.vue'));
 Vue.component('edit-question-hints', require('./components/EditQuestionHints.vue'));

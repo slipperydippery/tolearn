@@ -18167,6 +18167,7 @@ window.Vue = __webpack_require__(88);
  */
 
 Vue.component('show-question', __webpack_require__(91));
+Vue.component('rate-question', __webpack_require__(236));
 Vue.component('edit-question', __webpack_require__(219));
 Vue.component('edit-question-tags', __webpack_require__(222));
 Vue.component('edit-question-hints', __webpack_require__(225));
@@ -71265,6 +71266,155 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(237)
+/* template */
+var __vue_template__ = __webpack_require__(238)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\RateQuestion.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-41cf48dd", Component.options)
+  } else {
+    hotAPI.reload("data-v-41cf48dd", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 237 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['question', 'scorecardid'],
+
+    data: function data() {
+        return {
+            'scorecard': {}
+        };
+    },
+    mounted: function mounted() {
+        if (this.scorecardid > 0) {
+            this.getScorecard();
+        }
+    },
+
+
+    computed: {},
+
+    methods: {
+        getScorecard: function getScorecard() {
+            var _this = this;
+
+            axios.get('/api/scorecard/' + this.scorecardid).then(function (response) {
+                _this.scorecard = response.data;
+            });
+        },
+        setWeight: function setWeight(n) {
+            this.scorecard.weight = n;
+            this.postScorecard();
+        },
+        postScorecard: function postScorecard() {
+            axios.post('/api/scorecard/' + this.scorecardid + '/update', {
+                'scorecard': this.scorecard
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.scorecardid > 0
+    ? _c(
+        "div",
+        { staticClass: "rate clickable" },
+        _vm._l(5, function(n) {
+          return _c(
+            "span",
+            {
+              staticClass: "star",
+              on: {
+                click: function($event) {
+                  _vm.setWeight(n)
+                }
+              }
+            },
+            [
+              _vm.scorecard.weight >= n
+                ? _c("i", { staticClass: "material-icons" }, [_vm._v(" star ")])
+                : _c("i", { staticClass: "material-icons" }, [
+                    _vm._v(" star_border ")
+                  ])
+            ]
+          )
+        })
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-41cf48dd", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

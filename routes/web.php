@@ -33,6 +33,8 @@ Route::get('/api/hint/{hint}/destroy', 'ApiHintController@destroy');
 Route::get('/api/question/{question}/hint', 'ApiQuestionHintController@index');
 Route::post('/api/question/{question}/hint/store', 'ApiQuestionHintController@store');
 
+Route::get('/api/scorecard/{scorecard}', 'ApiScorecardController@show');
+Route::post('/api/scorecard/{scorecard}/update', 'ApiScorecardController@update');
 Route::get('/api/scorecard/{scorecard}/answer', 'ApiScorecardAnswerController@index');
 Route::post('/api/question/{question}/answer/store', 'ApiQuestionAnswerController@store');
 
