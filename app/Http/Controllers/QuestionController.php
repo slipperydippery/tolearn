@@ -61,11 +61,12 @@ class QuestionController extends Controller
     {
         if(Auth::user()){
             if( ! $question->scorecards->where('user_id', Auth::user()->id)->count() ) {
-                Scorecard::create([
+                $scorecard = Scorecard::create([
                     'user_id' => Auth::user()->id,
                     'question_id' => $question->id,
                     'moving_average' => 1
                 ]);
+                return view('question.show', compact('question', 'scorecard'));
             } 
             $scorecard = $question->scorecards->where('user_id', Auth::user()->id)->first();
             return view('question.show', compact('question', 'scorecard'));

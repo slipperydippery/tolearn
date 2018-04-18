@@ -51473,6 +51473,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70093,163 +70099,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-12 main-container" }, [
-      _c(
-        "div",
-        { staticClass: "questionquestion" },
-        [
-          _vm.question.question
-            ? _c("vue-markdown", { attrs: { source: _vm.question.question } })
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "useranswer row" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.useranswer,
-                  expression: "useranswer"
-                }
-              ],
-              ref: "useranswer",
-              staticClass: "form-control",
-              attrs: {
-                id: "useranswer",
-                oninput:
-                  'this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"',
-                placeholder: "Use markdown"
-              },
-              domProps: { value: _vm.useranswer },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+  return _c("div", {}, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 main-container" }, [
+        _c(
+          "div",
+          { staticClass: "questionquestion" },
+          [
+            _vm.question.question
+              ? _c("vue-markdown", { attrs: { source: _vm.question.question } })
+              : _vm._e()
+          ],
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row useranswer--container" }, [
+      _c("div", { staticClass: "col-12 main-container" }, [
+        _c("div", { staticClass: "useranswer row" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.useranswer,
+                    expression: "useranswer"
                   }
-                  _vm.useranswer = $event.target.value
+                ],
+                ref: "useranswer",
+                staticClass: "form-control",
+                attrs: {
+                  id: "useranswer",
+                  oninput:
+                    'this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"',
+                  placeholder: "Use markdown"
+                },
+                domProps: { value: _vm.useranswer },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.useranswer = $event.target.value
+                  }
                 }
-              }
-            })
-          ])
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-6" },
+            [
+              _vm.useranswer
+                ? _c("vue-markdown", { attrs: { source: _vm.useranswer } })
+                : _vm._e()
+            ],
+            1
+          )
         ]),
+        _vm._v(" "),
+        _vm.hints.length
+          ? _c(
+              "div",
+              { staticClass: "row hints" },
+              _vm._l(_vm.hints, function(hint) {
+                return _c("question-hint", {
+                  key: hint.id,
+                  attrs: { hint: hint, index: _vm.hints.indexOf(hint) }
+                })
+              })
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-6" },
+          {
+            staticClass: "questionanswer",
+            on: {
+              click: function($event) {
+                _vm.toggleAnswer()
+              }
+            }
+          },
           [
-            _vm.useranswer
-              ? _c("vue-markdown", { attrs: { source: _vm.useranswer } })
+            _vm.answerhidden ? _c("h4", [_vm._v("Reveal Answer")]) : _vm._e(),
+            _vm._v(" "),
+            _vm.question.answer && !_vm.answerhidden
+              ? _c("vue-markdown", { attrs: { source: _vm.question.answer } })
               : _vm._e()
           ],
           1
         )
       ]),
       _vm._v(" "),
-      _vm.hints.length
-        ? _c(
-            "div",
-            { staticClass: "row hints" },
-            _vm._l(_vm.hints, function(hint) {
-              return _c("question-hint", {
-                key: hint.id,
-                attrs: { hint: hint, index: _vm.hints.indexOf(hint) }
-              })
-            })
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "questionanswer",
-          on: {
-            click: function($event) {
-              _vm.toggleAnswer()
-            }
-          }
-        },
-        [
-          _vm.answerhidden ? _c("h4", [_vm._v("Reveal Answer")]) : _vm._e(),
-          _vm._v(" "),
-          _vm.question.answer && !_vm.answerhidden
-            ? _c("vue-markdown", { attrs: { source: _vm.question.answer } })
-            : _vm._e()
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-12 rateanswer main-container" }, [
-      _vm.guest
-        ? _c("div", { staticClass: "guest" }, [
-            _c("a", { attrs: { href: "/login" } }, [
-              _vm._v(" Log in to rate your answer ")
+      _c("div", { staticClass: "col-12 rateanswer main-container" }, [
+        _vm.guest
+          ? _c("div", { staticClass: "guest" }, [
+              _c("a", { attrs: { href: "/login" } }, [
+                _vm._v(" Log in to rate your answer ")
+              ])
             ])
-          ])
-        : _c("div", { staticClass: "rateanswer--answer-container" }, [
-            !_vm.answered
-              ? _c("span", [
-                  _c(
-                    "i",
-                    {
-                      staticClass:
-                        "material-icons md-36 clickable rateanswer--answer answercorrect",
-                      on: { click: _vm.answerCorrect }
-                    },
-                    [_vm._v("check")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "i",
-                    {
-                      staticClass:
-                        "material-icons md-36 clickable rateanswer--answer answerfalse",
-                      on: { click: _vm.answerFalse }
-                    },
-                    [_vm._v("close")]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("span", { staticClass: "answernext--container" }, [
-              _vm.answered
-                ? _c(
-                    "span",
-                    {
-                      staticClass: "questionscore clickable",
-                      on: { click: function($event) {} }
-                    },
-                    [
-                      _vm._v(
-                        "\n\t\t\t\t\t" +
-                          _vm._s(_vm.correctCount) +
-                          " / " +
-                          _vm._s(_vm.answerCount) +
-                          "\n\t\t\t\t"
-                      )
-                    ]
-                  )
+          : _c("div", { staticClass: "rateanswer--answer-container" }, [
+              !_vm.answered
+                ? _c("span", [
+                    _c(
+                      "i",
+                      {
+                        staticClass:
+                          "material-icons md-36 clickable rateanswer--answer answercorrect",
+                        on: { click: _vm.answerCorrect }
+                      },
+                      [_vm._v("check")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "i",
+                      {
+                        staticClass:
+                          "material-icons md-36 clickable rateanswer--answer answerfalse",
+                        on: { click: _vm.answerFalse }
+                      },
+                      [_vm._v("close")]
+                    )
+                  ])
                 : _vm._e(),
               _vm._v(" "),
-              _c(
-                "i",
-                {
-                  staticClass:
-                    "material-icons md-36 clickable rateanswer--answer answernext",
-                  on: { click: _vm.answerCorrect }
-                },
-                [_vm._v("chevron_right")]
-              )
+              _c("span", { staticClass: "answernext--container" }, [
+                _vm.answered
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "questionscore clickable",
+                        on: { click: function($event) {} }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(_vm.correctCount) +
+                            " / " +
+                            _vm._s(_vm.answerCount) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "i",
+                  {
+                    staticClass:
+                      "material-icons md-36 clickable rateanswer--answer answernext",
+                    on: { click: _vm.answerCorrect }
+                  },
+                  [_vm._v("chevron_right")]
+                )
+              ])
             ])
-          ])
+      ])
     ])
   ])
 }

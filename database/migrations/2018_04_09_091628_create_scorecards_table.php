@@ -23,6 +23,8 @@ class CreateScorecardsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+            $table->integer('answertype_id')->unsigned()->default(1);
+            $table->foreign('answertype_id')->references('id')->on('answertypes')->onDelete('cascade');
             $table->timestamps();
         });
     }

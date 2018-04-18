@@ -1,59 +1,65 @@
 <template>
-	<div class="row">
-		<div class="col-12 main-container">
-			<div class="questionquestion">
-				<vue-markdown :source="question.question" v-if="question.question"></vue-markdown>
-			</div>
-			<div class="useranswer row">
-				<div class="col-12">
-				    <label for="useranswer"> <h3>Your answer</h3> </label>
-			    </div>
-				<div class="col-6">
-					<div class="form-group">
-						<textarea 
-							id="useranswer"
-			                class="form-control"
-			                oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
-			                ref="useranswer"			
-							v-model="useranswer"
-							placeholder="Use markdown" 
-						>
-						</textarea>
-					</div>
+	<div class="">
+		<div class="row">
+			<div class="col-12 main-container">
+				<div class="questionquestion">
+					<vue-markdown :source="question.question" v-if="question.question"></vue-markdown>
 				</div>
-				<div class="col-6">
-					<vue-markdown :source="useranswer" v-if="useranswer"></vue-markdown>	
-				</div>
-			</div>
-			<div class="row hints" v-if="hints.length">
-				<question-hint
-					v-for="hint in hints"
-					:hint="hint"
-					:key="hint.id"
-					:index="hints.indexOf(hint)"
-				>
-				</question-hint>
-			</div>
-			<div class="questionanswer" @click="toggleAnswer()"> 
-				<h4 v-if="answerhidden">Reveal Answer</h4>
-				<vue-markdown :source="question.answer" v-if="question.answer && ( ! answerhidden) "></vue-markdown>
 			</div>
 		</div>
-		<div class="col-12 rateanswer main-container">
-			<div class="guest" v-if="guest"> 
-				<a href="/login" > Log in to rate your answer </a>
+		<div class="row useranswer--container">
+			<div class="col-12 main-container">
+				<div class="useranswer row">
+					<div class="col-12">
+					    <label for="useranswer"> <h3>Your answer</h3> </label>
+				    </div>
+					<div class="col-6">
+						<div class="form-group">
+							<textarea 
+								id="useranswer"
+				                class="form-control"
+				                oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
+				                ref="useranswer"			
+								v-model="useranswer"
+								placeholder="Use markdown" 
+							>
+							</textarea>
+						</div>
+					</div>
+					<div class="col-6">
+						<vue-markdown :source="useranswer" v-if="useranswer"></vue-markdown>	
+					</div>
+				</div>
+				<div class="row hints" v-if="hints.length">
+					<question-hint
+						v-for="hint in hints"
+						:hint="hint"
+						:key="hint.id"
+						:index="hints.indexOf(hint)"
+					>
+					</question-hint>
+				</div>
+				<div class="questionanswer" @click="toggleAnswer()"> 
+					<h4 v-if="answerhidden">Reveal Answer</h4>
+					<vue-markdown :source="question.answer" v-if="question.answer && ( ! answerhidden) "></vue-markdown>
+				</div>
 			</div>
-			<div class="rateanswer--answer-container" v-else> 
-				<span v-if="! answered">
-					<i class="material-icons md-36 clickable rateanswer--answer answercorrect" @click="answerCorrect">check</i>
-					<i class="material-icons md-36 clickable rateanswer--answer answerfalse" @click="answerFalse">close</i>
-				</span>
-				<span class="answernext--container">
-					<span class="questionscore clickable" v-if="answered" @click>
-						{{ correctCount }} / {{ answerCount }}
+			<div class="col-12 rateanswer main-container">
+				<div class="guest" v-if="guest"> 
+					<a href="/login" > Log in to rate your answer </a>
+				</div>
+				<div class="rateanswer--answer-container" v-else> 
+					<span v-if="! answered">
+						<i class="material-icons md-36 clickable rateanswer--answer answercorrect" @click="answerCorrect">check</i>
+						<i class="material-icons md-36 clickable rateanswer--answer answerfalse" @click="answerFalse">close</i>
 					</span>
-					<i class="material-icons md-36 clickable rateanswer--answer answernext" @click="answerCorrect">chevron_right</i>
-				</span>
+					<span class="answernext--container">
+						<span class="questionscore clickable" v-if="answered" @click>
+							{{ correctCount }} / {{ answerCount }}
+						</span>
+						<i class="material-icons md-36 clickable rateanswer--answer answernext" @click="answerCorrect">chevron_right</i>
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
