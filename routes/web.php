@@ -38,6 +38,7 @@ Route::post('/api/scorecard/{scorecard}/update', 'ApiScorecardController@update'
 Route::get('/api/scorecard/{scorecard}/answer', 'ApiScorecardAnswerController@index');
 Route::post('/api/question/{question}/answer/store', 'ApiQuestionAnswerController@store');
 
+Route::get('/questionset/create', 'QuestionsetController@create');
 
 Auth::routes();
 

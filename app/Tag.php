@@ -12,4 +12,9 @@ class Tag extends Model
     {
     	return $this->belongsToMany(Question::class);
     }
+
+    public function tagcategories()
+    {
+    	return $this->belongsTo(Tagcategory::class);
+    }
 }
