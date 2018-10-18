@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			<h1>Let's create a question</h1>
+			<h1 class="oversized">New</h1>
 		</div>
 		<div class="row"></div>
 		<div class="row edit-question--container">

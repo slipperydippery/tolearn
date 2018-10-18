@@ -2,28 +2,37 @@
 	<div class="row edit-question">
 		<div class="col-12 edit-question--input main-container">
 			<form>
-				<div class="form-group">
-				    <label for="questiontitle">Title</label>
-					<input id="questiontitle" class="form-control" type="text" v-model="workQuestion.title" ref="titleinput">
-				</div>
+
+                <div class="form-group">
+                    <textarea 
+                        id="questionquestion"
+                        class="form-control"
+                        oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
+                        ref="questioninput"         
+                        v-model="workQuestion.question"
+                        v-b-tooltip.hover
+                        title="Use ``` to start and end a code-block, use ` to start and end inline code"
+                        placeholder="Question" 
+                    >
+                    </textarea>
+                </div>
 
 				<edit-question-tags
 					:initquestion="initquestion"
 				>
 				</edit-question-tags>
 
-				<div class="form-group">
-				    <label for="questionquestion">Question</label>
-					<textarea 
-						id="questionquestion"
-		                class="form-control"
-		                oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
-		                ref="questioninput"			
-						v-model="workQuestion.question"
-						placeholder="Use ``` to start and end a code-block, use ` to start and end inline code" 
-					>
-					</textarea>
-				</div>
+                <div class="form-group">    
+                    <label for="questionanswer">Answer</label>
+                    <textarea 
+                        id="questionanswer"
+                        class="form-control"
+                        oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
+                        ref="answerinput"           
+                        v-model="workQuestion.answer"
+                    >
+                    </textarea>
+                </div>
 
 				<edit-question-hints
 					:initquestion="initquestion"
@@ -31,18 +40,6 @@
 					@updatehints="getHints()"
 				>
 				</edit-question-hints>
-
-				<div class="form-group">	
-				    <label for="questionanswer">Answer</label>
-					<textarea 
-						id="questionanswer"
-		                class="form-control"
-		                oninput='this.style.height = "";this.style.height = (this.scrollHeight + 3) + "px"'
-		                ref="answerinput"			
-						v-model="workQuestion.answer"
-					>
-					</textarea>
-				</div>
 				<button class="btn btn-primary" @click.prevent="saveQuestion">Save Question</button>
 			</form>
 		</div>
